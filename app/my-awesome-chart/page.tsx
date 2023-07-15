@@ -1,3 +1,5 @@
+import Chart from "./comps/chart";
+
 export default async function ChartHome() {
   const response = await fetch("https://api.frankfurter.app/2023-01-01..2023-01-31?from=GBP&to=USD");
   const data = await response.json();
@@ -21,5 +23,9 @@ export default async function ChartHome() {
     x: new Date(dataKeys[index]),
   }));
 
-  return <div></div>;
+  return (
+    <div>
+      <Chart data={{ chartData, historicChartData }} />
+    </div>
+  );
 }
