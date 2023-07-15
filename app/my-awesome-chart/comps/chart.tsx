@@ -1,6 +1,6 @@
 "use client";
 
-import { VictoryAxis, VictoryChart, VictoryLegend, VictoryLine } from "victory";
+import { VictoryAxis, VictoryChart, VictoryLabel, VictoryLegend, VictoryLine } from "victory";
 
 interface ChartDataInterface {
   x: Date;
@@ -49,6 +49,36 @@ export default function Chart({ data }: propsInterface) {
   }
   const filteredTicksAndVictoryLineData = getObjectsWithRequiredDates(data);
 
+  const CustomTickLabel = (props: any) => {
+    const { x, y, datum } = props;
+    const dateLabelY = y + 25;
+    const dayLabelY = y + 10;
+
+    const options = {
+      day: "numeric" as const,
+      month: "numeric" as const,
+      year: "numeric" as const,
+    };
+
+    const formattedDate = new Intl.DateTimeFormat("en-US", options).format(new Date(datum));
+
+    const [month, day, year] = formattedDate.split("/");
+
+    const formattedDateString = `${Number(day)}/${Number(month)}/${Number(year)}`;
+
+    return (
+      <g>
+        <VictoryLabel
+          x={x}
+          y={dayLabelY}
+          text={new Date(datum).toLocaleDateString("en-US", { weekday: "short" })}
+          textAnchor="middle"
+        />
+        <VictoryLabel x={x} y={dateLabelY} text={formattedDateString} textAnchor="middle" style={{ fontSize: 8 }} />
+      </g>
+    );
+  };
+
   return (
     <div>
       <VictoryChart
@@ -73,6 +103,7 @@ export default function Chart({ data }: propsInterface) {
         />
         <VictoryAxis
           tickValues={filteredTicksAndVictoryLineData.dates}
+          tickLabelComponent={<CustomTickLabel />}
           label="Date"
           style={{
             axis: { stroke: "#756f6a" },
@@ -87,11 +118,16 @@ export default function Chart({ data }: propsInterface) {
           style={{
             axis: { stroke: "#756f6a" },
             axisLabel: { fontSize: 10, padding: 40 },
+            grid: { stroke: (tick: number) => (tick > 0.5 ? "red" : "grey") },
             ticks: { stroke: "grey", size: 5 },
             tickLabels: { fontSize: 10, padding: 5 },
           }}
         />
         <VictoryLine data={filteredTicksAndVictoryLineData.victoryLineData} style={{ data: { stroke: "#034cff" } }} />
+        <VictoryLine
+          data={filteredTicksAndVictoryLineData.historicVictoryLineData}
+          style={{ data: { stroke: "#dddddd", strokeDasharray: "5,5" } }}
+        />
       </VictoryChart>
     </div>
   );
