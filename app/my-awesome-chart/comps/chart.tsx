@@ -1,5 +1,7 @@
 "use client";
 
+import { scaleTime } from "d3-scale";
+import { discontinuityRange, scaleDiscontinuous } from "d3fc";
 import { VictoryAxis, VictoryChart, VictoryLabel, VictoryLegend, VictoryLine } from "victory";
 
 interface ChartDataInterface {
@@ -79,15 +81,33 @@ export default function Chart({ data }: propsInterface) {
     );
   };
 
+  const discontinuousScale = scaleDiscontinuous(scaleTime())
+    .discontinuityProvider(
+      discontinuityRange(
+        [new Date("2023-01-03"), new Date("2023-01-04")],
+        [new Date("2023-01-05"), new Date("2023-01-06")],
+        [new Date("2023-01-07"), new Date("2023-01-10")],
+        [new Date("2023-01-11"), new Date("2023-01-12")],
+        [new Date("2023-01-14"), new Date("2023-01-15")],
+        [new Date("2023-01-17"), new Date("2023-01-18")],
+        [new Date("2023-01-13"), new Date("2023-01-15")],
+        [new Date("2023-01-19"), new Date("2023-01-20")],
+        [new Date("2023-01-21"), new Date("2023-01-24")],
+        [new Date("2023-01-25"), new Date("2023-01-26")],
+        [new Date("2023-01-27"), new Date("2023-01-30")]
+      )
+    )
+    .domain([new Date("2023-01-02"), new Date("2023-01-30")]);
+
   return (
     <div>
       <VictoryChart
         domain={{
           y: [1.1, 1.7],
         }}
-        width={600}
+        width={650}
         domainPadding={{ x: 20 }}
-        scale={{ x: "time" }}
+        scale={{ x: discontinuousScale }}
       >
         <VictoryLegend
           x={200}
@@ -108,7 +128,7 @@ export default function Chart({ data }: propsInterface) {
           style={{
             axis: { stroke: "#756f6a" },
             axisLabel: { fontSize: 11, padding: 40 },
-            ticks: { stroke: "grey", size: 5 },
+            ticks: { stroke: "grey", size: 4 },
             tickLabels: { padding: 5 },
           }}
         />
