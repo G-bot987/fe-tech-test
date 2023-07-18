@@ -106,11 +106,11 @@ export default function Chart({ data }: propsInterface) {
           y: [1.1, 1.7],
         }}
         width={650}
-        domainPadding={{ x: 20 }}
+        domainPadding={{ x: 5 }}
         scale={{ x: discontinuousScale }}
       >
         <VictoryLegend
-          x={200}
+          x={225}
           y={15}
           centerTitle
           orientation="horizontal"

@@ -1,31 +1,6 @@
 ## Moot tech test getting started
 
-Clone the repo and install dependencies:
+#### demonstration video
 
-```bash
-npm install
-```
+https://drive.google.com/file/d/1ygEmO-OeETaHYhqA_wtfNR5UJ3hSddv2/view
 
-Run the development server:
-
-```bash
-npm run dev
-```
-
-Server should be available on: [http://localhost:3000](http://localhost:3000).
-
-See the first page for further instructions, good luck!
-
-#### Other useful Next.js commands
-
-Production build (catches production build errors):
-
-```bash
-npm run build
-```
-
-Local production preview:
-
-```bash
-npm run preview
-```
